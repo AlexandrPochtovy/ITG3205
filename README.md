@@ -1,1 +1,1 @@
-Simple TG-3205 3-axis MEMS gyro i2c driver for STM32F1xx.
+Simple ITG-3205 3-axis MEMS gyro i2c driver for STM32F1xx.

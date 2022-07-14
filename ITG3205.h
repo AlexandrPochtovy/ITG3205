@@ -23,22 +23,12 @@
 extern "C" {
 #endif
 
-#include "I2C_Master/MyI2C.h"
+#include "I2C/MyI2C.h"
 #include "ITG3205_Register.h"
-/* состояние процесса обмена данными с устройством как с отдельным элементом сети
- * 	применяется для отображения состояния процесса работы с устройством для главного кода
- */
-typedef enum ITG3205_status_t {//состояние устройства
-	ITG_Init,		//устройство не настроено
-	ITG_OK,		//устройство готово к опросу
-	ITG_Faulth	//устройство неисправно
-} ITG3205_status;
 
-/*	состояние обмена данными с устройством, использовать для завершения функции работы с устройством */
-typedef enum ITG3205_Connect_Status_t {
-	ITG3205_Processing, //выполняется работа с устройством: обмен данными, обработка результатов
-	ITG3205_Complite	//работа с устройством завершена, данные считаны/записаны корректно
-} ITG3205_Connect_Status;
+enum ITG3205_ADDRESS {
+	ITG3205_ADDR = 0xD0
+};
 
 typedef struct ITG3205_RAW_t {
 	int16_t temp;
@@ -47,8 +37,6 @@ typedef struct ITG3205_RAW_t {
 	int16_t Z;
 } ITG3205_RAW;
 
-
-
 typedef struct ITG3205_data_t {
 	float temp;
 	float X;
@@ -56,17 +44,16 @@ typedef struct ITG3205_data_t {
 	float Z;
 } ITG3205_data;
 //common data struct for sensor
-typedef struct ITG3205_dev_t {
+typedef struct ITG3205 {
 	const uint8_t addr;
 	uint8_t step;
-	ITG3205_status status;
+	Device_status_t status;
 	ITG3205_RAW raw;
 	ITG3205_data data;
-} ITG3205_dev;
+} ITG3205_t;
 //===========================================================================
-ITG3205_Connect_Status ITG3205_Init(I2C_Connection *_i2c, ITG3205_dev *dev, uint8_t *pbuffer);
-ITG3205_Connect_Status ITG3205_GetData(I2C_Connection *_i2c, ITG3205_dev *dev, uint8_t *pbuffer);
-
+uint8_t ITG3205_Init(I2C_Connection *_i2c, ITG3205_t *dev);
+uint8_t ITG3205_GetData(I2C_Connection *_i2c, ITG3205_t *dev);
 
 #ifdef __cplusplus
 }
