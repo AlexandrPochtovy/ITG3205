@@ -23,6 +23,7 @@
 extern "C" {
 #endif
 
+#include "math.h"
 #include "I2C/MyI2C.h"
 #include "ITG3205_Register.h"
 
