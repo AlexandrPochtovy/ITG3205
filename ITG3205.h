@@ -27,6 +27,8 @@ extern "C" {
 #include "I2C/MyI2C.h"
 #include "ITG3205_Register.h"
 
+#define ITG3205_DATA_LEN 8
+
 enum ITG3205_ADDRESS {
 	ITG3205_ADDR = 0xD0
 };
